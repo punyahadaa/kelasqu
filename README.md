@@ -1,6 +1,6 @@
 # KelasQu
 
-Aplikasi kelas online berbasis Laravel 10, Bootstrap 5, dan MySQL. KelasQu menyediakan pendaftaran dan login, dashboard terpisah untuk admin dan siswa, serta daftar pengguna yang hanya dapat diakses admin.
+Aplikasi kelas online berbasis Laravel 10, Bootstrap 5, dan MySQL. KelasQu menyediakan pendaftaran dan login, dashboard terpisah untuk admin dan siswa, menu kelas/materi/sertifikat, profil akun, laporan admin, serta halaman pengguna dan konfigurasi.
 
 ## Persiapan database
 
@@ -39,5 +39,7 @@ Seeder membuat akun admin awal:
 - Kata sandi: `KelasQuAdmin2026!`
 
 Ubah `KELASQU_ADMIN_EMAIL` dan `KELASQU_ADMIN_PASSWORD` di `.env` sebelum menjalankan seeder di lingkungan bersama/produksi. Pendaftaran publik selalu membuat akun dengan peran siswa; peran admin tidak dapat dipilih dari form pendaftaran.
+
+Menu siswa mencakup Dashboard, Kelas Saya, Materi, Sertifikat, dan Profil. Menu admin mencakup Dashboard, Kelas, Kategori, Pengguna, Laporan, Pengaturan, dan Profil. Halaman kelas, kategori, materi, dan sertifikat menampilkan keadaan kosong sampai data kelas tersedia. Profil dan kata sandi dapat diperbarui dari menu Profil.
 
 Untuk pengujian otomatis, aktifkan ekstensi `pdo_sqlite` dan `sqlite3` pada `php.ini`, lalu jalankan `php artisan test`. Suite tes menggunakan SQLite in-memory agar tidak mengubah database MySQL lokal.

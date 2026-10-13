@@ -25,10 +25,35 @@
                     <i class="bi bi-grid-1x2"></i><span>Dashboard</span>
                 </a>
                 @if(auth()->user()->role === 'admin')
+                    <a href="{{ route('admin.classes') }}" class="sidebar-link {{ request()->routeIs('admin.classes') ? 'active' : '' }}">
+                        <i class="bi bi-easel2"></i><span>Kelas</span>
+                    </a>
+                    <a href="{{ route('admin.categories') }}" class="sidebar-link {{ request()->routeIs('admin.categories') ? 'active' : '' }}">
+                        <i class="bi bi-collection"></i><span>Kategori</span>
+                    </a>
                     <a href="{{ route('admin.users') }}" class="sidebar-link {{ request()->routeIs('admin.users') ? 'active' : '' }}">
                         <i class="bi bi-people"></i><span>Pengguna</span>
                     </a>
+                    <a href="{{ route('admin.reports') }}" class="sidebar-link {{ request()->routeIs('admin.reports') ? 'active' : '' }}">
+                        <i class="bi bi-bar-chart-line"></i><span>Laporan</span>
+                    </a>
+                    <a href="{{ route('admin.settings') }}" class="sidebar-link {{ request()->routeIs('admin.settings') ? 'active' : '' }}">
+                        <i class="bi bi-gear"></i><span>Pengaturan</span>
+                    </a>
+                @else
+                    <a href="{{ route('user.classes') }}" class="sidebar-link {{ request()->routeIs('user.classes') ? 'active' : '' }}">
+                        <i class="bi bi-journal-bookmark"></i><span>Kelas Saya</span>
+                    </a>
+                    <a href="{{ route('user.materials') }}" class="sidebar-link {{ request()->routeIs('user.materials') ? 'active' : '' }}">
+                        <i class="bi bi-journal-text"></i><span>Materi</span>
+                    </a>
+                    <a href="{{ route('user.certificates') }}" class="sidebar-link {{ request()->routeIs('user.certificates') ? 'active' : '' }}">
+                        <i class="bi bi-award"></i><span>Sertifikat</span>
+                    </a>
                 @endif
+                <a href="{{ route('profile.edit') }}" class="sidebar-link {{ request()->routeIs('profile.*') ? 'active' : '' }}">
+                    <i class="bi bi-person-circle"></i><span>Profil</span>
+                </a>
             </nav>
             <div class="sidebar-bottom">
                 <div class="sidebar-help">

@@ -65,4 +65,55 @@ class AuthenticationTest extends TestCase
             ->assertOk()
             ->assertSee('Dashboard Admin');
     }
+
+    public function test_navigation_pages_are_separated_by_user_role(): void
+    {
+        $user = User::factory()->create(['role' => 'user']);
+
+        $this->actingAs($user)
+            ->get(route('user.classes'))
+            ->assertOk()
+            ->assertSee('Kelas Saya');
+        $this->get(route('user.materials'))->assertOk()->assertSee('Materi belum tersedia');
+        $this->get(route('user.certificates'))->assertOk()->assertSee('Belum ada sertifikat');
+        $this->get(route('profile.edit'))->assertOk()->assertSee('Profil saya');
+        $this->get(route('admin.reports'))->assertForbidden();
+
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)
+            ->get(route('admin.classes'))
+            ->assertOk()
+            ->assertSee('Kelas yang tersedia');
+        $this->get(route('admin.categories'))->assertOk()->assertSee('Kategori kelas');
+        $this->get(route('admin.reports'))->assertOk()->assertSee('Laporan KelasQu');
+        $this->get(route('admin.settings'))->assertOk()->assertSee('Konfigurasi saat ini');
+        $this->get(route('user.classes'))->assertForbidden();
+    }
+
+    public function test_user_can_update_profile_and_password(): void
+    {
+        $user = User::factory()->create([
+            'name' => 'Nama Awal',
+            'email' => 'awal@example.com',
+            'password' => 'Password123!',
+        ]);
+
+        $this->actingAs($user)
+            ->put(route('profile.update'), [
+                'name' => 'Nama Baru',
+                'email' => 'baru@example.com',
+                'password' => 'NewPassword123!',
+                'password_confirmation' => 'NewPassword123!',
+            ])
+            ->assertRedirect(route('profile.edit'))
+            ->assertSessionHas('status', 'Profil berhasil diperbarui.');
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'name' => 'Nama Baru',
+            'email' => 'baru@example.com',
+        ]);
+        $this->assertTrue(password_verify('NewPassword123!', $user->fresh()->password));
+    }
 }
