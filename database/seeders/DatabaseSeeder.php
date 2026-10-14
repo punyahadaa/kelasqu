@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             ['email' => env('KELASQU_ADMIN_EMAIL', 'admin@kelasqu.test')],
             [
                 'name' => 'Administrator KelasQu',
+                'email_verified_at' => now(),
                 'password' => env('KELASQU_ADMIN_PASSWORD', 'KelasQuAdmin2026!'),
                 'role' => 'admin',
             ]

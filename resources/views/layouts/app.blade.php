@@ -41,6 +41,9 @@
                         <i class="bi bi-gear"></i><span>Pengaturan</span>
                     </a>
                 @else
+                    <a href="{{ route('user.catalog') }}" class="sidebar-link {{ request()->routeIs('user.catalog', 'user.course.show', 'user.lesson.show') ? 'active' : '' }}">
+                        <i class="bi bi-compass"></i><span>Jelajahi Kelas</span>
+                    </a>
                     <a href="{{ route('user.classes') }}" class="sidebar-link {{ request()->routeIs('user.classes') ? 'active' : '' }}">
                         <i class="bi bi-journal-bookmark"></i><span>Kelas Saya</span>
                     </a>

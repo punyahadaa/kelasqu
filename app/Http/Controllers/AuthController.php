@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -33,6 +34,14 @@ class AuthController extends Controller
                 ->onlyInput('email');
         }
 
+        if (! $request->user()->is_active) {
+            Auth::logout();
+
+            return back()
+                ->withErrors(['email' => 'Akun ini dinonaktifkan. Silakan hubungi administrator.'])
+                ->onlyInput('email');
+        }
+
         $request->session()->regenerate();
 
         return redirect()->intended(route('dashboard'));
@@ -54,12 +63,14 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => $validated['password'],
             'role' => 'user',
+            'is_active' => true,
         ]);
 
+        event(new Registered($user));
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard');
+        return redirect()->route('verification.notice');
     }
 
     public function logout(Request $request): RedirectResponse

@@ -33,6 +33,9 @@
                 <p>Masuk ke akunmu dan lanjutkan perjalanan belajar.</p>
             </div>
 
+            @if(session('status'))
+                <div class="alert alert-success auth-alert" role="status"><i class="bi bi-check-circle me-2"></i>{{ session('status') }}</div>
+            @endif
             @if($errors->any())
                 <div class="alert alert-danger auth-alert" role="alert"><i class="bi bi-exclamation-circle me-2"></i>{{ $errors->first() }}</div>
             @endif
@@ -45,7 +48,7 @@
                     @error('email')<div class="field-error">{{ $message }}</div>@enderror
                 </div>
                 <div class="field-group">
-                    <div class="label-row"><label for="password" class="form-label">Kata sandi</label></div>
+                    <div class="label-row"><label for="password" class="form-label">Kata sandi</label><a class="forgot-link" href="{{ route('password.request') }}">Lupa kata sandi?</a></div>
                     <div class="input-with-icon"><i class="bi bi-lock"></i><input id="password" name="password" type="password" class="form-control" placeholder="Masukkan kata sandi" autocomplete="current-password" required><button type="button" class="password-toggle" aria-label="Tampilkan kata sandi" onclick="const field=document.getElementById('password'); field.type=field.type==='password'?'text':'password'"><i class="bi bi-eye"></i></button></div>
                 </div>
                 <div class="form-check remember-check">

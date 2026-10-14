@@ -1,6 +1,6 @@
 # KelasQu
 
-Aplikasi kelas online berbasis Laravel 10, Bootstrap 5, dan MySQL. KelasQu menyediakan pendaftaran dan login, dashboard terpisah untuk admin dan siswa, menu kelas/materi/sertifikat, profil akun, laporan admin, serta halaman pengguna dan konfigurasi.
+Aplikasi kelas online berbasis Laravel 10, Bootstrap 5, dan MySQL. KelasQu menyediakan pendaftaran/login, dashboard per peran, katalog dan manajemen kelas, materi serta progres, sertifikat, pengelolaan pengguna, pemulihan kata sandi, dan laporan.
 
 ## Persiapan database
 
@@ -40,6 +40,16 @@ Seeder membuat akun admin awal:
 
 Ubah `KELASQU_ADMIN_EMAIL` dan `KELASQU_ADMIN_PASSWORD` di `.env` sebelum menjalankan seeder di lingkungan bersama/produksi. Pendaftaran publik selalu membuat akun dengan peran siswa; peran admin tidak dapat dipilih dari form pendaftaran.
 
-Menu siswa mencakup Dashboard, Kelas Saya, Materi, Sertifikat, dan Profil. Menu admin mencakup Dashboard, Kelas, Kategori, Pengguna, Laporan, Pengaturan, dan Profil. Halaman kelas, kategori, materi, dan sertifikat menampilkan keadaan kosong sampai data kelas tersedia. Profil dan kata sandi dapat diperbarui dari menu Profil.
+## Alur penggunaan
+
+1. Admin membuka **Kategori** dan membuat kategori kelas.
+2. Admin membuka **Kelas** lalu membuat kelas sebagai draft.
+3. Dari halaman edit kelas, tambahkan minimal satu materi. Isi materi berupa teks; tautan video opsional dibuka di tab baru.
+4. Ubah status kelas ke **Publikasikan**. Kelas tanpa materi tidak dapat dipublikasikan.
+5. Pendaftar memverifikasi alamat email melalui tautan email sebelum membuka dashboard. Siswa membuka **Jelajahi Kelas**, mencari kelas, lalu bergabung gratis.
+6. Siswa membuka materi, menandai tiap materi selesai, dan menerima sertifikat setelah seluruh materi selesai. Sertifikat dapat dicetak atau disimpan ke PDF melalui browser.
+7. Admin dapat mencari pengguna, mengubah peran, dan menonaktifkan akun. Sistem melindungi administrator aktif terakhir.
+
+Pendaftaran kelas saat ini gratis; pembayaran, unggah video langsung, dan unggah berkas materi belum termasuk. Atur `MAIL_MAILER` dan kredensial SMTP yang valid di `.env` agar email verifikasi dan tautan pemulihan kata sandi dapat dikirim. Untuk pengembangan lokal, Mailpit Laragon dapat digunakan.
 
 Untuk pengujian otomatis, aktifkan ekstensi `pdo_sqlite` dan `sqlite3` pada `php.ini`, lalu jalankan `php artisan test`. Suite tes menggunakan SQLite in-memory agar tidak mengubah database MySQL lokal.
